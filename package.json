@@ -1,0 +1,143 @@
+{
+  "name": "faac",
+  "displayName": "FAAC",
+  "description": "Free AI Auto-Complete",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.102.0"
+  },
+  "publisher": "Dr. Poptart",
+  "categories": [
+    "Other"
+  ],
+  "icon": "icon.png",
+  "main": "extension.js",
+  "activationEvents": [
+    "*"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "faac.startServer",
+        "title": "Start FAAC Server",
+        "category": "FAAC"
+      },
+      {
+        "command": "faac.stopServer",
+        "title": "Stop FAAC Server",
+        "category": "FAAC"
+      },
+      {
+        "command": "faac.restartServer",
+        "title": "Restart FAAC Server",
+        "category": "FAAC"
+      },
+      {
+        "command": "faac.handleTab",
+        "title": "Accept Suggestion",
+        "category": "FAAC"
+      }
+    ],
+  "keybindings": [
+    {
+      "command": "faac.handleTab",
+      "key": "tab",
+      "when": "editorTextFocus && suggestionPreviewVisible"
+    }
+  ],
+    "configuration": {
+      "title": "FAAC",
+      "properties": {
+        "faac.port": {
+          "type": "number",
+          "default": 8080,
+          "minimum": 1024,
+          "maximum": 65535,
+          "description": "Port number for the FAAC WebSocket server"
+        },
+        "faac.typingDelay": {
+          "type": "number",
+          "default": 500,
+          "minimum": 100,
+          "maximum": 5000,
+          "description": "Delay in milliseconds before sending typing context to server"
+        },
+        "faac.maxDocumentLength": {
+          "type": "number",
+          "default": 10000,
+          "minimum": 1000,
+          "maximum": 100000,
+          "description": "Maximum number of characters to send from the document"
+        },
+        "faac.cursorMarker": {
+          "type": "string",
+          "default": "[CURSOR HERE]",
+          "description": "String to insert at cursor position when sending context"
+        },
+        "faac.promptPrefix": {
+              "type": "string",
+              "default": "Complete the following code. The cursor is at the marked position:",
+              "description": "Prefix text to send before the code context",
+              "markdownDescription": "Prefix text to send before the code context. You can use multi-line text here.",
+              "scope": "resource"
+        },
+        "faac.promptSuffix": {
+          "type": "string",
+          "default": "Provide a relevant code completion for the cursor position:",
+          "description": "Suffix text to send after the code context"
+        },
+        "faac.enableCursorMarker": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to insert cursor marker in sent text"
+        },
+        "faac.sendFullDocument": {
+          "type": "boolean",
+          "default": false,
+          "description": "Send entire document regardless of max length setting"
+        },
+        "faac.contextLines": {
+          "type": "number",
+          "default": 50,
+          "minimum": 10,
+          "maximum": 500,
+          "description": "Number of lines to include around cursor when not sending full document"
+        },
+        "faac.previewTimeout": {
+          "type": "number",
+          "default": 5000,
+          "minimum": 1000,
+          "maximum": 30000,
+          "description": "How long to show suggestions before hiding them (ms)"
+        },
+        "faac.enableAutoTrigger": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically trigger completions while typing"
+        },
+        "faac.autoStartServer": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically start the server when the extension activates",
+          "scope": "resource"
+        },
+        "faac.enableDebugLogging": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable verbose debug logging in extension output"
+        },
+        "faac.allowedFileExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["*"],
+          "description": "File extensions to enable FAAC for (* for all files)"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "ws": "^8.18.3"
+  }
+}

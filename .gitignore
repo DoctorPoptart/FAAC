@@ -1,0 +1,9 @@
+node_modules
+.vscode-test/
+*.vsix
+config.json
+test
+.vscode
+.vscode-test.mjs
+.vscodeignore
+package-lock.json
